@@ -3,11 +3,15 @@ package kz.example.demo.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
+import javax.sql.DataSource;
+import java.sql.DriverManager;
 import java.util.Locale;
 
 @Configuration
@@ -39,5 +43,17 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(localeChangeInterceptor());
+    }
+    @Bean
+    public DataSource dataSource(){
+        DriverManagerDataSource dataSource=new DriverManagerDataSource();
+        dataSource.setUrl("jdbc:postgresql://localhost:5432/project1");
+        dataSource.setUsername("postgres");
+        dataSource.setPassword("General12345");
+        return dataSource;
+    }
+    @Bean
+    public JdbcTemplate jdbcTemplate(){
+        return new JdbcTemplate(dataSource());
     }
 }

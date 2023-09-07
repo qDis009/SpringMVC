@@ -20,4 +20,13 @@ public class PersonDAO {
         return jdbcTemplate.query("select *from person where id=?",new Object[]{id},new BeanPropertyRowMapper<>(Person.class))
                 .stream().findAny();
     }
+    public void save(Person person){
+        jdbcTemplate.update("insert into person(fullName,age,email,address)",new Object[]{person.getFullName(),person.getAge(),person.getEmail(),person.getAddress()});
+    }
+    public void update(int id,Person updatedperson){
+        jdbcTemplate.update("update person set fullName=?,age=?,email=?,address=? where id=?",new Object[]{updatedperson.getFullName(),updatedperson.getAge(),updatedperson.getEmail(),updatedperson.getAddress(),id});
+    }
+    public void delete(int id){
+        jdbcTemplate.update("delete from person where id=?",new Object[]{id});
+    }
 }
