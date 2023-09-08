@@ -1,5 +1,6 @@
 package kz.example.demo.dao;
 
+import kz.example.demo.models.Book;
 import kz.example.demo.models.Person;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -18,9 +19,9 @@ public class PersonDAO {
         return jdbcTemplate.query("select *from person", new BeanPropertyRowMapper<>(Person.class));
     }
 
-    public Optional<Person> details(int id) {
+    public Person details(int id) {
         return jdbcTemplate.query("select *from person where id=?", new Object[]{id}, new BeanPropertyRowMapper<>(Person.class))
-                .stream().findAny();
+                .stream().findAny().orElse(null);
     }
 
     public void save(Person person) {
@@ -42,5 +43,8 @@ public class PersonDAO {
     public Optional<Person> getPersonByEmail(String email){
         return jdbcTemplate.query("select *from person where email=",new Object[]{email},new BeanPropertyRowMapper<>(Person.class))
                 .stream().findAny();
+    }
+    public List<Book> getBooksByPersonId(int id){
+        return jdbcTemplate.query("select *from books where person_id=?",new Object[]{id},new BeanPropertyRowMapper<>(Book.class));
     }
 }
