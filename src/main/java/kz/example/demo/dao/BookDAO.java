@@ -17,9 +17,9 @@ public class BookDAO {
     public List<Book> index(){
         return jdbcTemplate.query("select *from book",new BeanPropertyRowMapper<>(Book.class));
     }
-    public Optional<Book> details(int id){
+    public Book details(int id){
         return jdbcTemplate.query("select *from book where id=?",new Object[]{id},new BeanPropertyRowMapper<>(Book.class))
-                .stream().findAny();
+                .stream().findAny().orElse(null);
     }
     public void save(Book book){
         jdbcTemplate.update("insert into book(title,author,year) values (?,?,?)",new Object[]{book.getTitle(),book.getAuthor(),book.getYear()});
@@ -32,7 +32,7 @@ public class BookDAO {
     }
     //Находим владельца книги по его id
     public Optional<Person> getBookOwner(int id){
-        return jdbcTemplate.query("select person.* from book join person on book book.person_id=person.id where book.id=?",new Object[]{id},new BeanPropertyRowMapper<>(Person.class))
+        return jdbcTemplate.query("select person.* from book join person on book.person_id=person.id where book.id=?",new Object[]{id},new BeanPropertyRowMapper<>(Person.class))
                 .stream().findAny();
     }
     //Этот медот освождает книгу когда человек возвращает её
