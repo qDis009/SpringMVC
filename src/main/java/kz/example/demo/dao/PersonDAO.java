@@ -25,7 +25,7 @@ public class PersonDAO {
     }
 
     public void save(Person person) {
-        jdbcTemplate.update("insert into person(fullName,age,email,address)", new Object[]{person.getFullName(), person.getAge(), person.getEmail(), person.getAddress()});
+        jdbcTemplate.update("insert into person(fullName,age,email,address) values(?,?,?,?)", new Object[]{person.getFullName(), person.getAge(), person.getEmail(), person.getAddress()});
     }
 
     public void update(int id, Person updatedperson) {
@@ -41,10 +41,10 @@ public class PersonDAO {
                 .stream().findAny();
     }
     public Optional<Person> getPersonByEmail(String email){
-        return jdbcTemplate.query("select *from person where email=",new Object[]{email},new BeanPropertyRowMapper<>(Person.class))
+        return jdbcTemplate.query("select *from person where email=?",new Object[]{email},new BeanPropertyRowMapper<>(Person.class))
                 .stream().findAny();
     }
     public List<Book> getBooksByPersonId(int id){
-        return jdbcTemplate.query("select *from books where person_id=?",new Object[]{id},new BeanPropertyRowMapper<>(Book.class));
+        return jdbcTemplate.query("select *from book where person_id=?",new Object[]{id},new BeanPropertyRowMapper<>(Book.class));
     }
 }

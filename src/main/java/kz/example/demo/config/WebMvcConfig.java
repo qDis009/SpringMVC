@@ -11,7 +11,6 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import javax.sql.DataSource;
-import java.sql.DriverManager;
 import java.util.Locale;
 
 @Configuration
