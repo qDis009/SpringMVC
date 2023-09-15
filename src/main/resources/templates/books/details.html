@@ -1,0 +1,46 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css'}" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script th:src="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js'}"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <title>Person</title>
+</head>
+<body>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col sm-6">
+            <h6 th:text="${book.getId()}"></h6>
+            <h6 th:text="${book.getTitle()}"></h6>
+            <h6 th:text="${book.getAuthor()}"></h6>
+            <h6 th:text="${book.getYear()}"></h6>
+            <div th:if="${owner}">
+                <span>Owner is </span><span th:text="${owner.getFullName()}"></span>
+                <form th:method="patch" th:action="@{'/books/'+${book.getId()}+'/release'}">
+                    <button class="btn btn-info">Release the book</button>
+                </form>
+            </div>
+            <div th:if="${people}">
+                <span>This book is free. How will take it?</span>
+                <form th:method="patch" th:action="@{'/books/'+${book.getId()}+'/assign'}">
+                    <select th:object="${person}" th:field="*{id}">
+                        <option th:each="person:${people}" th:value="${person.getId()}" th:text="${person.getFullName()}">
+                            Choose the person
+                        </option>
+                    </select>
+                    <button class="btn btn-success">Assign the book</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <form th:method="delete" th:action="@{'/books/'+${book.getId()}}">
+        <button class="btn btn-danger">Delete</button>
+    </form>
+    <form th:action="@{'/books/'+${book.getId()}+'/edit'}" th:method="get">
+        <button class="btn btn-info">Edit</button>
+    </form>
+</div>
+</body>
+</html>

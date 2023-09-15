@@ -16,7 +16,6 @@ public class PersonValidator implements Validator {
     public boolean supports(Class<?> clazz) {
         return Person.class.equals(clazz);
     }
-
     @Override
     public void validate(Object target, Errors errors) {
         Person person=(Person) target;

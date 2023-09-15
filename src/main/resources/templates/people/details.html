@@ -32,9 +32,9 @@
     <form th:method="delete" th:action="@{'/people/'+${person.getId()}}">
         <button class="btn btn-danger">Delete</button>
     </form>
-    <div class="form-group">
-        <a th:href="@{'/people/'+${person.getId()}+'/edit'}" class="btn btn-info btn-sm">Edit</a>
-    </div>
+    <form th:action="@{'/people/'+${person.getId()}+'/edit'}" th:method="get">
+        <button class="btn btn-info">Edit</button>
+    </form>
 </div>
 </body>
 </html>

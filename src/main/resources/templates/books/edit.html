@@ -1,0 +1,45 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <link th:href="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css'}" rel="stylesheet"
+          integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script th:src="@{'https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js'}"
+            integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
+            crossorigin="anonymous"></script>
+    <title>Update person</title>
+</head>
+<body>
+<div class="container">
+    <div class="row mt-5">
+        <div class="col sm-6 offset-3">
+            <form th:method="patch" th:action="@{'/books/'+${book.getId()}}" th:object="${book}">
+                <div class="form-group">
+                    <label for="Title">Title:</label>
+                    <input type="text" id="Title" th:field="*{title}" class="form-control">
+                    <div th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color:red">
+                        Title error
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="author">Author:</label>
+                    <input type="text" th:field="*{author}" id="author" class="form-control">
+                    <div th:if="${#fields.hasErrors('author')}" th:errors="*{author}" style="color:red">
+                        Author error
+                    </div>
+                </div>
+                <div class="form-group mb-2">
+                    <label for="year">Year:</label>
+                    <input type="text" th:field="*{year}" id="year" class="form-control">
+                    <div th:if="${#fields.hasErrors('year')}" th:errors="*{year}" style="color:red">
+                        Year error
+                    </div>
+                </div>
+                <div class="form-group">
+                    <button class="btn btn-success">Update!</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>
